@@ -1,5 +1,9 @@
-<img width="1232" height="900" alt="Screenshot 2026-10-19 at 18 40 23" src="https://github.com/user-attachments/assets/194bbd21-3d78-4428-8f3a-a61f35c29b47" />
 # Find My Files
+
+
+<img width="1232" height="900" alt="Screenshot 2026-10-19 at 18 40 23" src="https://github.com/user-attachments/assets/194bbd21-3d78-4428-8f3a-a61f35c29b47" />
+<img width="512" height="512" alt="Find My Files icon" src="https://github.com/user-attachments/assets/f7a93f52-f336-4a03-bb3b-e723b342f980" />
+
 
 Find My Files is an open-source Finder-inspired file browser for macOS. It pairs
 a native AppKit window and filesystem bridge with a web-based interface styled
@@ -70,8 +74,6 @@ open software you trust; do not disable Gatekeeper globally.
 Find My Files is distributed under the GNU General Public License, version 3.
 See [LICENSE](LICENSE) for the full license text.
 
-<img width="1232" height="900" alt="Screenshot 2026-10-19 at 18 40 23" src="https://github.com/user-attachments/assets/194bbd21-3d78-4428-8f3a-a61f35c29b47" />
-<img width="512" height="512" alt="Find My Files icon" src="https://github.com/user-attachments/assets/f7a93f52-f336-4a03-bb3b-e723b342f980" />
 
 ###### Copyright (c) 2026 [PSANDILYA1440]
 
