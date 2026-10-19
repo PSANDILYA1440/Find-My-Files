@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Find My Files</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar glass-panel">
+            <div class="brand">
+                <img
+                    class="brand-icon"
+                    src="brand-icon.png"
+                    alt=""
+                    aria-hidden="true"
+                >
+                <span>Find My Files</span>
+            </div>
+
+            <nav id="sidebar-locations" aria-label="Finder locations"></nav>
+
+            <div class="sidebar-bottom">
+                <button class="access-button" id="full-disk-access">
+                    <span aria-hidden="true">◉</span>
+                    <span>Full Disk Access…</span>
+                </button>
+                <p id="status-text">Choose a location</p>
+            </div>
+        </aside>
+
+        <main class="main-panel">
+            <header class="toolbar glass-panel">
+                <div class="navigation-controls">
+                    <button class="icon-button" aria-label="Back" disabled>‹</button>
+                    <button class="icon-button" aria-label="Forward" disabled>›</button>
+                </div>
+
+                <div class="search-box">
+                    <span>⌕</span>
+                    <input type="search" placeholder="Search your files…" aria-label="Search files">
+                    <kbd>⌘ F</kbd>
+                </div>
+
+                <div class="view-switch" role="group" aria-label="File view">
+                    <button class="view-switch-button active" type="button" data-view="list" aria-label="List view" aria-pressed="true" title="List view">☷</button>
+                    <button class="view-switch-button" type="button" data-view="icons" aria-label="Icon view" aria-pressed="false" title="Icon view">▦</button>
+                </div>
+
+                <button
+                    class="avatar-button"
+                    id="app-menu-toggle"
+                    type="button"
+                    aria-label="View options"
+                    aria-haspopup="menu"
+                    aria-expanded="false"
+                    aria-controls="app-menu"
+                >•••</button>
+                <div class="app-menu" id="app-menu" role="group" aria-label="View options" hidden>
+                    <button class="app-menu-item" type="button" data-menu-action="refresh">
+                        <span class="app-menu-icon" aria-hidden="true">↻</span>
+                        <span>Refresh</span>
+                        <kbd>⌘ R</kbd>
+                    </button>
+                    <div class="app-menu-divider"></div>
+                    <p class="app-menu-heading">View as</p>
+                    <button class="app-menu-item" type="button" data-menu-view="list" aria-pressed="true">
+                        <span class="app-menu-icon" aria-hidden="true">☷</span>
+                        <span>List</span>
+                        <span class="app-menu-check" aria-hidden="true">✓</span>
+                    </button>
+                    <button class="app-menu-item" type="button" data-menu-view="icons" aria-pressed="false">
+                        <span class="app-menu-icon" aria-hidden="true">▦</span>
+                        <span>Icons</span>
+                        <span class="app-menu-check" aria-hidden="true">✓</span>
+                    </button>
+                    <div class="app-menu-divider"></div>
+                    <p class="app-menu-heading">Sort by</p>
+                    <button class="app-menu-item" type="button" data-menu-sort="name" aria-pressed="true">
+                        <span>Name</span>
+                        <span class="app-menu-check" aria-hidden="true">✓</span>
+                    </button>
+                    <button class="app-menu-item" type="button" data-menu-sort="modified" aria-pressed="false">
+                        <span>Date Modified</span>
+                        <span class="app-menu-check" aria-hidden="true">✓</span>
+                    </button>
+                    <button class="app-menu-item" type="button" data-menu-sort="size" aria-pressed="false">
+                        <span>Size</span>
+                        <span class="app-menu-check" aria-hidden="true">✓</span>
+                    </button>
+                    <div class="app-menu-divider"></div>
+                    <button class="app-menu-item" type="button" data-menu-action="full-disk-access">
+                        <span class="app-menu-icon" aria-hidden="true">◉</span>
+                        <span>Full Disk Access…</span>
+                    </button>
+                </div>
+            </header>
+
+            <section class="content-area">
+                <div class="page-heading">
+                    <div>
+                        <p class="eyebrow" id="page-eyebrow">FAVORITES</p>
+                        <h1 id="page-title">Recents</h1>
+                        <p class="subtitle" id="page-subtitle">Your files and folders.</p>
+                    </div>
+                </div>
+
+                <div class="file-browser glass-panel">
+                    <div class="list-header" aria-hidden="true">
+                        <span>Name</span>
+                        <span>Date Modified</span>
+                        <span>Size</span>
+                    </div>
+                    <div id="file-list" role="list"></div>
+                    <div class="browser-message" id="browser-message">
+                        <div class="empty-icon">⌕</div>
+                        <h2 id="empty-title">Choose a location</h2>
+                        <p id="empty-description">Your folders will appear here.</p>
+                    </div>
+                </div>
+
+                <p class="footer-note">FIND MY FILES <span>·</span> MADE FOR MACOS</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

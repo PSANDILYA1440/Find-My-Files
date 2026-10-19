@@ -1,0 +1,93 @@
+name: Build and publish macOS release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-slice:
+    name: Build ${{ matrix.arch }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x86_64
+            runner: macos-15-intel
+          - arch: arm64
+            runner: macos-15
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build native architecture
+        run: |
+          TARGET_ARCH="${{ matrix.arch }}" ./build.sh
+          mkdir -p "build/slice-${{ matrix.arch }}"
+          cp build/FindMyFiles "build/slice-${{ matrix.arch }}/FindMyFiles"
+          lipo "build/slice-${{ matrix.arch }}/FindMyFiles" -verify_arch "${{ matrix.arch }}"
+
+      - name: Upload architecture slice
+        uses: actions/upload-artifact@v4
+        with:
+          name: find-my-files-${{ matrix.arch }}
+          path: build/slice-${{ matrix.arch }}/FindMyFiles
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    name: Package and publish universal DMG
+    needs: build-slice
+    runs-on: macos-15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Download architecture slices
+        uses: actions/download-artifact@v4
+        with:
+          pattern: find-my-files-*
+          path: build/slices
+          merge-multiple: false
+
+      - name: Create universal app and DMG
+        run: |
+          mkdir -p build
+          lipo -create \
+            build/slices/find-my-files-x86_64/FindMyFiles \
+            build/slices/find-my-files-arm64/FindMyFiles \
+            -output build/FindMyFiles-universal
+          lipo build/FindMyFiles-universal -verify_arch x86_64 arm64
+
+          PREBUILT_BINARY="$PWD/build/FindMyFiles-universal" ./build.sh
+          codesign --verify --deep --strict "build/Find My Files.app"
+
+          STAGING_DIR="$(mktemp -d)"
+          trap 'rm -rf "$STAGING_DIR"' EXIT
+          ditto "build/Find My Files.app" "$STAGING_DIR/Find My Files.app"
+          ln -s /Applications "$STAGING_DIR/Applications"
+
+          DMG_PATH="$PWD/build/Find-My-Files-${GITHUB_REF_NAME}-universal.dmg"
+          hdiutil create \
+            -volname "Find My Files" \
+            -srcfolder "$STAGING_DIR" \
+            -ov \
+            -format UDZO \
+            "$DMG_PATH"
+          hdiutil verify "$DMG_PATH"
+          shasum -a 256 "$DMG_PATH" > "${DMG_PATH}.sha256"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            "build/Find-My-Files-${GITHUB_REF_NAME}-universal.dmg" \
+            "build/Find-My-Files-${GITHUB_REF_NAME}-universal.dmg.sha256" \
+            --verify-tag \
+            --title "Find My Files ${GITHUB_REF_NAME}" \
+            --generate-notes
