@@ -74,8 +74,10 @@ open software you trust; do not disable Gatekeeper globally.
 Find My Files is distributed under the GNU General Public License, version 3.
 See [LICENSE](LICENSE) for the full license text.
 
+## A tiny disclaimer: 
+Find My Files is an independent project and is not affiliated with or endorsed by Apple Inc. Apple, macOS, and Finder are trademarks of Apple Inc.
 
-###### Copyright (c) 2026 [PSANDILYA1440]
+###### Copyright (c) 2026 PSANDILYA1440
 
 ###### Find My Files is free software: you can redistribute it and/or modify
 ###### it under the terms of the GNU General Public License as published
