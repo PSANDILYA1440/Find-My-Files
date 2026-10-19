@@ -72,5 +72,5 @@ See [LICENSE](LICENSE) for the full license text.
 ###### Copyright (c) 2026 [PSANDILYA1440]
 
 ###### Find My Files is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published
-by the Free Software Foundation, version 3.
+###### it under the terms of the GNU General Public License as published
+###### by the Free Software Foundation, version 3.
